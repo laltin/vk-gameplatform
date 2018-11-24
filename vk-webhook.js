@@ -145,8 +145,10 @@ bot.on(async function(ctx) {
         }
     }
 
-    for (let i=0; i < match.players.length; i++) {
-        bot.sendMessage(match.players[i], hasEnded[i]);
+    if (hasEnded) {
+        for (let i=0; i < match.players.length; i++) {
+            bot.sendMessage(match.players[i], hasEnded[i]);
+        }
     }
 })
 
