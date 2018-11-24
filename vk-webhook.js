@@ -9,7 +9,8 @@ const bot = new VkBot({
 })
 
 bot.on((ctx) => {
-    console.log('received');
+    console.log(ctx.message.from_id);
+    console.log(JSON.stringfy(ctx.message));
     ctx.reply('Hello!')
 })
 
