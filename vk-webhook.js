@@ -25,7 +25,7 @@ async function findGame(text) {
 
     var availableGames = await database.getListOfGames();
     for (let g in availableGames) {
-        if (text.indexOf(availableGames[g].name) >= 0) {
+        if (text.indexOf(availableGames[g].game_name) >= 0) {
             game = availableGames[g];
             break;
         }
@@ -59,7 +59,7 @@ bot.on(async function(ctx) {
         // TODO: check number of players is enough
         // TODO: check if all users are in our database
 
-        var infoMessage = `Starting ${game.name} game with ` // TODO: add players
+        var infoMessage = `Starting ${game.game_name} game with ` // TODO: add players
         ctx.reply(infoMessage);
         for (let p in players) {
             bot.sendMessage(p.id, infoMessage)
