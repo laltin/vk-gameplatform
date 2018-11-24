@@ -30,9 +30,9 @@ exports.getUserById = async function(user_id) {
 }
 
 exports.saveUserById = async function(user_id, username) {
- var user = {
+ var user = new User({
   name: username,
   id: user_id
- };
- return User.create(user).exec();
+ });
+ return user.save();
 }
