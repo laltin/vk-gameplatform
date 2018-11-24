@@ -44,5 +44,20 @@ exports.getMatchByUserId = async function(user_id) {
  if (!user.current_match_id) {
     return null;
  }
- return Match.findOne({ id:user.current_match_id }).exec();
+ // TODO: find only in not ended matches
+ return Match.findOne({ id:user.current_match_id, game_ended: false }).exec();
+}
+
+exports.createMatch = async function(players_list, data, playerIndex) {
+ var match = new Match({
+  players: players_list,
+  state: data,
+  active_player: playerIndex,
+  game_ended: false
+ });
+ return match.save();
+}
+
+exports.updateMatch = async function(match_id, data, newPlayerIndex, game_ended) {
+ return Game.updateOne({id:match_id}, {state: data, active_player: newPlayerIndex, game_ended: game_ended});
 }
