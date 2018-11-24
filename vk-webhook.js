@@ -91,6 +91,7 @@ bot.on(async function(ctx) {
     }
 
     var game = await database.getGameByName(match.game_name)
+    // TODO: check if it is current users turn
 
     var move = intents.getMoveIntent(game.nlpEndpoint, text);
     if (!move) {
