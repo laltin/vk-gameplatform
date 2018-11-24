@@ -57,6 +57,12 @@ bot.on(async function(ctx) {
         }
 
         var players = textUtils.findTaggedUsers(text);
+        var n = players.length + 1;
+        if (n < game.minPlayers || n > game.maxPlayers) {
+            let nnn = game.minPlayers == game.maxPlayers ? game.minPlayers : `${game.minPlayers} to ${game.maxPlayers}`
+            ctx.reply(`${game.game_name} requires ${nnn} players.`);
+            return;
+        }
         // TODO: check number of players is enough ********
         // TODO: check if all users are in our database
 
