@@ -1,10 +1,5 @@
-//var fs = require('fs');
-//exports.getListOfGames = function() {
-//    return [{name:'tic-tac-toe', code:fs.readFileSync('./test-game/ttt.js', "utf8")}];
-//}
-
 /********************************************************
-DEAR LALTIN
+Mongoose.js and MongoDB
 ********************************************************/
 const mongoose = require('mongoose')
 
@@ -12,25 +7,32 @@ const mongoose = require('mongoose')
 const url = "mongodb://Jaakko:Junction2018@ds161306.mlab.com:61306/vkchatbotgames";
 mongoose.connect(url, { useNewUrlParser: true });
 
-const Game = require("./models/game"); //make sure there is something in the directory
-const User = require("./models/user");
-const Match = require("./models/match");
+const Game = require("./models/game");   //Model for Game logic
+const User = require("./models/user");   //Model for VK user
+const Match = require("./models/match"); //Model for a match. Which game, who's playing
 
+//Get a list with all available games
 exports.getListOfGames = async function() {
-    return Game.find({}).exec();
-}
-exports.getGameByName =  async function(name) {
-    return Game.findOne({ game_name: name }).exec();
-}
-exports.updateGame = async function(name, min, max, nlp, source_code) {
- return Game.updateOne({game_name:name}, {minPlayers:min, maxPlayers:max, nlpEndpoint:nlp, source: source_code});
+  return Game.find({}).exec();
 }
 
+//Find a game object of a certain name
+exports.getGameByName =  async function(name) {
+  return Game.findOne({ game_name: name }).exec();
+}
+
+//Update the game source code and parameters
+exports.updateGame = async function(name, min, max, nlp, source_code) {
+  return Game.updateOne({game_name:name}, {minPlayers:min, maxPlayers:max, nlpEndpoint:nlp, source: source_code});
+}
+
+//Retreive a user by their VK id
 var getUserById = async function(user_id) {
  return User.findOne({id:user_id}).exec();
 };
 exports.getUserById = getUserById;
 
+//Create a new user based on VK profile
 exports.saveUserById = async function(user_id, username) {
  var user = new User({
   name: username,
@@ -39,6 +41,7 @@ exports.saveUserById = async function(user_id, username) {
  return user.save();
 }
 
+//Find the match that the user is currently busy with
 exports.getMatchByUserId = async function(user_id) {
  var user = await getUserById(user_id);
  console.log('current_match_id: ' + user.current_match_id);
@@ -49,6 +52,7 @@ exports.getMatchByUserId = async function(user_id) {
  return Match.findOne({ $and: [ {_id:user.current_match_id}, {game_ended: false}] }).exec();
 }
 
+//Create a new match
 exports.createMatch = async function(name, players_list, data, playerIndex) {
  var match = new Match({
   game_name: name,
@@ -66,6 +70,7 @@ exports.createMatch = async function(name, players_list, data, playerIndex) {
  }
 }
 
+//Update the game state and progress
 exports.updateMatch = async function(match_id, data, newPlayerIndex, game_ended) {
  return Match.updateOne({_id:match_id}, {state: data, active_player: newPlayerIndex, game_ended: game_ended});
 }
