@@ -28,7 +28,7 @@ let getMoveIntent = async function(url, text) {
     var response = await fetch(url);
     var result = await response.json();
 
-    console.log('intent for ' + text);
+    console.log('----- intent for ' + text);
     console.log(result.topScoringIntent.intent);
     console.log(result.topScoringIntent.score);
 
