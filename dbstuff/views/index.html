@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vk_gameplatform</title>
+</head>
+<body>
+
+
+<h1>new player</h1>
+<form action="/users" method="post">
+	First name:<br>
+  <input type="text" name="name" placeholder="name"><br>
+  	ID:<br>
+  <input type="text" name="id" placeholder="id123456789"><br>
+  <input type="submit"><br>
+</form>
+
+
+<h1>new game</h1>
+<form action="/games" method="post">
+	game_name:<br>
+  <input type="text" name="game_name" placeholder="game_name"><br>
+  <input type="submit"><br>
+</form>
+
+
+
+<h1>new match</h1>
+<form action="/matches" method="post">
+  	ID:<br>
+  <input type="text" name="id" placeholder="id123456789"><br>
+	game_name:<br>
+  <input type="text" name="game_name" placeholder="game_name"><br>
+
+players:<br>
+  <input type="text" name="players" placeholder="JSON here pls"><br>
+
+  state:<br>
+  <input type="text" name="state" placeholder="JSON here pls"><br>
+  <input type="submit"><br>
+</form>
+
+
+</body>
+</html>

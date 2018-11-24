@@ -1,0 +1,31 @@
+{
+  "name": "vk-gameplatform",
+  "version": "1.0.0",
+  "description": "vk chatbot gaming platform for junction",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laltin/vk-gameplatform.git"
+  },
+  "keywords": [
+    "vk",
+    "chatbot",
+    "gaming"
+  ],
+  "author": "Jaakko L, Lutfi A",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laltin/vk-gameplatform/issues"
+  },
+  "homepage": "https://github.com/laltin/vk-gameplatform#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "node-vk-bot-api": "^2.4.0"
+  }
+}
