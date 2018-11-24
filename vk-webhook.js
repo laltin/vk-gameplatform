@@ -15,6 +15,10 @@ const database = require('./database.js');
 const requireFromString = require('require-from-string');
 
 
+(async function() {
+console.log(await database.getListOfGames());
+})();
+
 
 function findGame(text) {
     var game;
