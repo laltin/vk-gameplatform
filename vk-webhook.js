@@ -79,6 +79,7 @@ bot.on(async function(ctx) {
         const [data, messages, playerIndex] = gameCode.init(players.length);
         var match = database.createMatch(game.game_name, players, JSON.stringify(data), playerIndex);
         for (let i=0; i < players.length; i++) {
+            console.log('player: ' + players[i]);
             bot.sendMessage(players[i], messages[i]);
 
             if (playerIndex == i) {
