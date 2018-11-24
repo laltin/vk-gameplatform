@@ -12,7 +12,7 @@ const bot = new VkBot({
 const textUtils = require('./textUtil.js');
 const intents = require('./intents.js');
 
-bot.on((ctx) => {
+bot.on(async function(ctx) {
     var user_id = ctx.message.from_id;
 
     /*
@@ -23,7 +23,8 @@ bot.on((ctx) => {
     }*/
 
     var text = ctx.message.text;
-    if (intents.checkStartIntent(text)) {
+    var wannaPlayAGame = await intents.checkStartIntent(text);
+    if (wannaPlayAGame) {
         ctx.reply("I see that you wanna play a game");
         /*
         var player = textUtils.findTaggedUsers(text);
