@@ -44,5 +44,5 @@ exports.getMatchByUserId = async function(user_id) {
  if (!user.current_match_id) {
     return null;
  }
- return Match.findOne({ id:user.current_match_id });
+ return Match.findOne({ id:user.current_match_id }).exec();
 }
