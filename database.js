@@ -67,5 +67,5 @@ exports.createMatch = async function(name, players_list, data, playerIndex) {
 }
 
 exports.updateMatch = async function(match_id, data, newPlayerIndex, game_ended) {
- return Game.updateOne({id:match_id}, {state: data, active_player: newPlayerIndex, game_ended: game_ended});
+ return Match.updateOne({id:match_id}, {state: data, active_player: newPlayerIndex, game_ended: game_ended});
 }
