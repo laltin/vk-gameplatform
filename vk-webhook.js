@@ -78,7 +78,7 @@ bot.on(async function(ctx) {
                 bot.sendMessage(players[i], 'It is your turn, make your move');
             }
             else {
-                let name = (await database.getUserById(players[i])).name;
+                let name = (await database.getUserById(players[playerIndex])).name;
                 bot.sendMessage(players[i], `It is ${name}'s turn! Waiting for his/her move.`);
             }
         }
@@ -114,6 +114,8 @@ bot.on(async function(ctx) {
         return;
     }
 
+    console.log('new data: '+JSON.stringify(nextData));
+
     // TODO: check if game ended
 
     database.updateMatch(JSON.stringify(nextData), nextPlayerIndex);
@@ -125,7 +127,7 @@ bot.on(async function(ctx) {
             bot.sendMessage(match.players[i], 'It is your turn, make your move');
         }
         else {
-            let name = (await database.getUserById(players[i])).name;
+            let name = (await database.getUserById(players[nextPlayerIndex])).name;
             bot.sendMessage(match.players[i], `It is ${name}'s turn! Waiting for his/her move.`);
         }
     }
