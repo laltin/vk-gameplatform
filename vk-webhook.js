@@ -149,7 +149,7 @@ bot.on(async function(ctx) {
         }
     }
 
-    console.log(hasEnded);
+    console.log('hasEnded: ' + hasEnded);
     if (hasEnded) {
         for (let i=0; i < match.players.length; i++) {
             bot.sendMessage(match.players[i], hasEnded[i]);
