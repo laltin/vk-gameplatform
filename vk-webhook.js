@@ -23,9 +23,14 @@ console.log(await database.getListOfGames());
 async function guessGame(text) {
     var game;
 
+    var intent = intents.getGameIntent(text)
+    if (!intent) {
+        return null;
+    }
+
     var availableGames = await database.getListOfGames();
     for (let g in availableGames) {
-        if (text.indexOf(availableGames[g].game_name) >= 0) {
+        if (intent.toLowerCase().indexOf(availableGames[g].game_name) >= 0) {
             game = availableGames[g];
             break;
         }
@@ -66,7 +71,7 @@ bot.on(async function(ctx) {
         }
         // TODO: check if all users are in our database
 
-        var infoMessage = `Starting ${game.game_name} game with ` // TODO: add players
+        var infoMessage = `Starting ${game.game_name} game`
         ctx.reply(infoMessage);
         for (let p in players) {
             bot.sendMessage(players[p], infoMessage)

@@ -22,12 +22,13 @@ exports.checkStartIntent = async function(text) {
     return (result.topScoringIntent.intent == "Start Game" && result.topScoringIntent.score > 0);
 }
 
-exports.getMoveIntent = async function(url, text) {
+let getMoveIntent = async function(url, text) {
     var url = url + encodeURIComponent(text);
 
     var response = await fetch(url);
     var result = await response.json();
 
+    console.log('intent for ' + text);
     console.log(result.topScoringIntent.intent);
     console.log(result.topScoringIntent.score);
 
@@ -37,3 +38,8 @@ exports.getMoveIntent = async function(url, text) {
 
     return result.topScoringIntent.intent;
 };
+exports.getMoveIntent = getMoveIntent;
+
+exports.getGameIntent = async function(text) {
+    return await getMoveIntent('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9497d07e-9ba9-461b-b091-6479652bec4d?subscription-key=789f5de87f9d4ada92e0b393c7d579c0&timezoneOffset=-360&q=', text)
+}
