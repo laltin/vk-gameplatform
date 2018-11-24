@@ -55,7 +55,12 @@ exports.createMatch = async function(players_list, data, playerIndex) {
   active_player: playerIndex,
   game_ended: false
  });
- return match.save();
+ let saved = await match.save();
+ let id = saved._id;
+
+ for (let i=0; i < players_list.length; i++) {
+    User.updateOne({ id:players_list[i] }, { current_match_id: id });
+ }
 }
 
 exports.updateMatch = async function(match_id, data, newPlayerIndex, game_ended) {
