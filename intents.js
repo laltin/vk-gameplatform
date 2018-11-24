@@ -11,3 +11,19 @@ exports.checkStartIntent = async function(text) {
 
     return (result.topScoringIntent.intent == "Start Game" && result.topScoringIntent.score > 0);
 }
+
+exports.getMoveIntent = async function(url, text) {
+    var url = url + encodeURIComponent(text);
+
+    var response = await fetch(url);
+    var result = await response.json();
+
+    console.log(result.topScoringIntent.intent);
+    console.log(result.topScoringIntent.score);
+
+    if (result.topScoringIntent.intent == "None") {
+        return null;
+    }
+
+    return result.topScoringIntent.intent;
+};

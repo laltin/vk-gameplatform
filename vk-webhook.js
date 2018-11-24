@@ -16,6 +16,18 @@ const requireFromString = require('require-from-string');
 
 
 
+function findGame(text) {
+    var game;
+    for (let g in availableGames) {
+        if (text.indexOf(availableGames[g].name) >= 0) {
+            game = availableGames[g];
+            break;
+        }
+    }
+
+    return game;
+}
+
 bot.on(async function(ctx) {
     var user_id = ctx.message.from_id;
 
@@ -23,7 +35,7 @@ bot.on(async function(ctx) {
     var user = database.getUserById(user_id);
     if (!user) {
         user = database.saveUserById(user_id, name);
-        ctx.reply('Hi, welcome!')
+        ctx.reply('Hello!')
     }*/
 
     var text = ctx.message.text;
@@ -31,13 +43,7 @@ bot.on(async function(ctx) {
     if (wannaPlayAGame) {
 
         var availableGames = database.getListOfGames();
-        var game;
-        for (let g in availableGames) {
-            if (text.indexOf(availableGames[g].name) >= 0) {
-                game = availableGames[g];
-                break;
-            }
-        }
+        var game = findGame(text);
 
         if (!game) {
             ctx.reply('Tell me which game do you wanna play?');
@@ -59,23 +65,61 @@ bot.on(async function(ctx) {
         var gameCode = requireFromString(game.code);
 
         const [data, messages, playerIndex] = gameCode.init(players.length);
+        var match = database.createMatch(players, data, playerIndex);
         for (let i=0; i < players.length; i++) {
             bot.sendMessage(players[i], messages[i]);
 
             if (playerIndex == i) {
-                bot.sendMessage(players[i], 'It is your turn');
+                bot.sendMessage(players[i], 'It is your turn, make your move');
             }
             else {
-                bot.sendMessage(players[i], `It is ${players[i]}'s turn`);
+                bot.sendMessage(players[i], `It is ${players[i]}'s turn! Waiting for his/her move.`);
             }
         }
 
-        var match = database.createMatch(players, data, playerIndex);
+        return;
+    }
+
+    var match = database.getMatchByUserId(user_id);
+    if (!match) {
+        ctx.reply("Wanna play a game? Just tell me the game and tag players");
+        return;
+    }
+
+    var game = findGame(match.game_name)
+
+    var move = intents.getMoveIntent(game.nlpEndpoint, text);
+    if (!move) {
+        ctx.reply("Sorry, I didn't get it. Try again");
+        return;
     }
     
-    //console.log(JSON.stringify(ctx.message));
+    var gameCode = requireFromString(game.code);
+    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(match.state, match.playerIndex, move);
 
-    ctx.reply('Hello!')
+    if (!isValid) {
+        var reason = nextData;
+        var errorMessage = "This move is not allowed. " + (reason ? reason : "")
+        ctx.reply(errorMessage);
+        return;
+    }
+
+    // TODO: check if game ended
+
+    database.updateMatch(nextData, nextPlayerIndex);
+    // TODO: update match if game ended
+    for (let i=0; i < match.players.length; i++) {
+        bot.sendMessage(match.players[i], messages[i]);
+
+        if (nextPlayerIndex == i) {
+            bot.sendMessage(match.players[i], 'It is your turn, make your move');
+        }
+        else {
+            bot.sendMessage(match.players[i], `It is ${match.players[i]}'s turn! Waiting for his/her move.`);
+        }
+    }
+
+    // TODO: send game ended messages
 })
 
 

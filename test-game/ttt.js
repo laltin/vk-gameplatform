@@ -27,6 +27,8 @@ exports.init = function(nPlayers) {
  */
 exports.transition = function(data, playerIndex, move) {
     let isValid = true;
+
+    move = move.toLowerCase();
     const col = move.charAt(0);
     const row = move.charAt(1);
     if(move.length != 2){
@@ -48,7 +50,10 @@ exports.transition = function(data, playerIndex, move) {
 
 
     const nextPlayerIndex = getNextPlayerIndex(playerIndex);
-    return [true, data, printState(data), nextPlayerIndex];
+
+    const printedState = printState(data);
+
+    return [true, data, [printedState, printedState], nextPlayerIndex];
 }
 /**
  * param: data
@@ -56,12 +61,46 @@ exports.transition = function(data, playerIndex, move) {
  *   messages: list of messages that will be sent to players, will be appended to transition messages
  */
 exports.hasEnded = function(data) {
-    for(let i; i<data.length; ++i){
+
+    //one diagonal direction
+    if(data[0][0] == data[1][1] && data[0][0] == data[2][2]){
+        if(data[0][0] == "O") return ["Player1 won!"];
+        else if(data[0][0] == "X") return ["Player2 won!"];
+    }
+
+    //other diagonal direction
+    if(data[0][2] == data[1][1] && data[0][2] == data[2][0]){
+        if(data[0][2] == "O") return ["Player1 won!"];
+        else if(data[0][2] == "X") return ["Player2 won!"];
+    }
+
+    //columns
+    for(let i=0; i<FIELD_LENGTH; ++i){
+        if(data[0][i] == data[1][i] && data[0][i] == data[2][i]){
+            if(data[0][i] == "O") return ["Player1 won!"];
+            else if(data[0][i] == "X") return ["Player2 won!"];
+        }
+    }
+
+    //rows
+    for(let i=0; i<FIELD_LENGTH; ++i){
+        if(data[i].every(field => field == "O")){
+            return ["Player1 won!"];
+        }
+
+        if(data[i].every(field => field == "X")){
+            return ["Player2 won!"];
+        }
+    }
+
+    //are there fields left
+    for(let i=0; i<FIELD_LENGTH; ++i){
         if(data[i].some(field => field == ".")){
             return false;
         }
     }
-    return ["Game is over"];
+
+    return ["Draw, no empty fields left"];
 }
 
 //create empty board
@@ -111,7 +150,7 @@ function playerToString(playerIndex){
     else return "X";
 }
 
-function printState(data){
+ function printState(data){
     let msg = "The current state of the board is:\n";
     
     msg += "  ";
