@@ -9,7 +9,7 @@ const bot = new VkBot({
 })
 
 
-const textUtils = require('./textUtils.js');
+const textUtils = require('./textUtil.js');
 
 bot.on((ctx) => {
     var user_id = ctx.message.from_id;
