@@ -123,8 +123,8 @@ bot.on(async function(ctx) {
         ctx.reply("Sorry, I didn't get it. Try again");
         return;
     }
-    move = move[0];
     params = move[1];
+    move = move[0];
     
     var gameCode = requireFromString(game.source);
     let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.active_player, move, params);
