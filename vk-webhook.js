@@ -70,7 +70,7 @@ bot.on(async function(ctx) {
         var gameCode = requireFromString(game.source);
 
         const [data, messages, playerIndex] = gameCode.init(players.length);
-        var match = database.createMatch(players, data, playerIndex);
+        var match = database.createMatch(game.game_name, players, data, playerIndex);
         for (let i=0; i < players.length; i++) {
             bot.sendMessage(players[i], messages[i]);
 

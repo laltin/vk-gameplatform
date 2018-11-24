@@ -49,8 +49,9 @@ exports.getMatchByUserId = async function(user_id) {
  return Match.findOne({ _id:user.current_match_id, game_ended: false }).exec();
 }
 
-exports.createMatch = async function(players_list, data, playerIndex) {
+exports.createMatch = async function(name, players_list, data, playerIndex) {
  var match = new Match({
+  game_name: name,
   players: players_list,
   state: data,
   active_player: playerIndex,
