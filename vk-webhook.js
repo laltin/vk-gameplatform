@@ -66,7 +66,7 @@ bot.on(async function(ctx) {
                 bot.sendMessage(players[i], 'It is your turn');
             }
             else {
-                bot.sendMessage(players[i], `It is ${player[i]}'s turn`);
+                bot.sendMessage(players[i], `It is ${players[i]}'s turn`);
             }
         }
 
