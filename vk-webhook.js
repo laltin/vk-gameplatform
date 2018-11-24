@@ -9,7 +9,8 @@ const bot = new VkBot({
 })
 
 bot.on((ctx) => {
-  ctx.reply('Hello!')
+    console.log('received');
+    ctx.reply('Hello!')
 })
 
 app.use(bodyParser.json())
