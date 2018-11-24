@@ -39,7 +39,7 @@ bot.on(async function(ctx) {
 
     var user = await database.getUserById(user_id);
     if (!user) {
-        let name = await intents.getUserVKName(user_id).first_name;
+        let name = (await intents.getUserVKName(user_id)).first_name;
         user = await database.saveUserById(user_id, name);
         ctx.reply('Hi, welcome!')
     }
