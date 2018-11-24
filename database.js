@@ -17,3 +17,21 @@ const Game = require("./models/game"); //make sure there is something in the dir
 exports.getListOfGames = async function() {
     return Game.find({}).exec();
 }
+exports.getGameByName =  async function(name) {
+    return Game.findOne({ game_name: name }).exec();
+}
+exports.updateGame = async function(name, min, max, nlp, source_code) {
+ return Game.updateOne({game_name:name}, {minPlayers:min, maxPlayers:max, nlpEndpoint:nlp, source: source_code});
+}
+
+exports.getUserById = async function(user_id) {
+ return User.findOne({id:user_id}).exec();
+}
+
+exports.saveUserById = async function(user_id, username) {
+ var user = {
+  name: username,
+  id: user_id
+ };
+ return User.create({user}).exec();
+}

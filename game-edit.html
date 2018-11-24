@@ -1,0 +1,71 @@
+<html>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" />
+         <style>
+         .container{
+             width:50%;
+             margin-top: 100px;
+         }
+         .title{
+             text-align: center;
+         }
+         </style>
+    <body>
+            <p class="h1 title">Game development platform for chat based games</p>
+            <p class="h4 title">Make your games come true.</p>
+        <div class="container">
+              
+
+                <form method="post" >
+                        <div class="form-group">
+                          <label for="gamename">Game Name:</label>
+                          <input type="text" class="form-control" id="gamename" aria-describedby="gamename" placeholder="Game Name" value="{{game}}" disabled="disabled">
+                        </div>
+
+                       
+                        <div class="row">
+                                <div class="form-group col-sm-6">
+                                        <label for="minplayernumber">Min. Number of Players</label>
+                                        <select name="min" class="form-control" id="minplayernumber">
+                                              <option>1</option>
+                                              <option>2</option>
+                                              <option>3</option>
+                                              <option>4</option>
+                                              <option>5</option>
+                                            </select>
+                                            <small class="form-text text-muted">Current val: {{min}}</small>
+                                      </div>
+              
+                                      <div class="form-group col-sm-6">
+                                              <label for="maxplayernumber">Max. Number of Players</label>
+                                              <select name="max" class="form-control" id="maxplayernumber">
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                  </select>
+                                                  <small class="form-text text-muted">Current val: {{max}}</small>
+                                            </div>
+                                            
+              
+                        </div>
+                       
+                        <div class="form-group">
+                                <label for="nlpendpoint">NLP EndPoint:</label>
+                                <input type="text" name="nlp" class="form-control" id="nlpendpoint" aria-describedby="gamename" placeholder="NLP Endpoint" value="{{nlp}}">
+                                <small id="nlpendpoint" class="form-text text-muted">eg: https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9497d07e-9ba9-461b-b091-6479652bec4d?subscription-key=789f5de87c0&timezoneOffset=-360&q=.</small>
+
+                        </div>
+
+                        <div class="form-group">
+                          <label for="gamecode">Game Source Code</label>
+                          <textarea class="form-control" name="code" id="gamedescription" placeholder="Your awesome code here" rows="10">{{code}}</textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                </form>
+        </div>
+           
+
+    </body>
+</html>

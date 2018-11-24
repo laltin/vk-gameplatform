@@ -20,7 +20,7 @@ console.log(await database.getListOfGames());
 })();
 
 
-async function findGame(text) {
+async function guessGame(text) {
     var game;
 
     var availableGames = await database.getListOfGames();
@@ -48,7 +48,7 @@ bot.on(async function(ctx) {
     var wannaPlayAGame = await intents.checkStartIntent(text);
     if (wannaPlayAGame) {
 
-        var game = await findGame(text);
+        var game = await guessGame(text);
 
         if (!game) {
             ctx.reply('Tell me which game do you wanna play?');
@@ -67,7 +67,7 @@ bot.on(async function(ctx) {
 
         players.unshift(user_id);
 
-        var gameCode = requireFromString(game.code);
+        var gameCode = requireFromString(game.source);
 
         const [data, messages, playerIndex] = gameCode.init(players.length);
         var match = database.createMatch(players, data, playerIndex);
@@ -91,7 +91,7 @@ bot.on(async function(ctx) {
         return;
     }
 
-    var game = await findGame(match.game_name)
+    var game = await database.getGameByName(match.game_name)
 
     var move = intents.getMoveIntent(game.nlpEndpoint, text);
     if (!move) {
@@ -99,7 +99,7 @@ bot.on(async function(ctx) {
         return;
     }
     
-    var gameCode = requireFromString(game.code);
+    var gameCode = requireFromString(game.source);
     let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(match.state, match.playerIndex, move);
 
     if (!isValid) {
@@ -128,6 +128,26 @@ bot.on(async function(ctx) {
 })
 
 
-app.use(bodyParser.json())
-app.post('/', bot.webhookCallback)
+const jsonParser = bodyParser.json()
+const urlencodedParser = bodyParser.urlencoded({extended:true});
+app.post('/', jsonParser, bot.webhookCallback)
+
+const Mustache = require('mustache');
+const fs = require('fs');
+const template = fs.readFileSync('game-edit.html', 'utf8');
+
+app.get('/edit/:game', async function(req, res) {
+    var name = req.params.game;
+    var game = await database.getGameByName(name);
+    let { minPlayers, maxPlayers, nlpEndpoint, source } = game || {};
+    res.send( Mustache.render(template, { game: name, min:minPlayers, max:maxPlayers, nlp:nlpEndpoint, code:source }) );
+});
+app.post('/edit/:game', urlencodedParser, async function(req, res) {
+    var name = req.params.game;
+    var { min,max,nlp,code } = req.body;
+
+    await database.updateGame(name, min, max, nlp, code);
+    res.redirect("/edit/" + name);
+});
+
 app.listen(9999)
