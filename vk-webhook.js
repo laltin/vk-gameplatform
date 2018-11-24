@@ -37,12 +37,11 @@ async function guessGame(text) {
 bot.on(async function(ctx) {
     var user_id = ctx.message.from_id;
 
-    /*
-    var user = database.getUserById(user_id);
+    var user = await database.getUserById(user_id);
     if (!user) {
-        user = database.saveUserById(user_id, name);
-        ctx.reply('Hello!')
-    }*/
+        user = await database.saveUserById(user_id, name);
+        ctx.reply('Hi, welcome!')
+    }
 
     var text = ctx.message.text;
     var wannaPlayAGame = await intents.checkStartIntent(text);
