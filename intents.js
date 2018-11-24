@@ -39,7 +39,7 @@ let getMoveIntent = async function(url, text) {
     let params = {};
     if (result.entities) {
         for (let i=0; i<result.entities.length; i++) {
-            params[ result.entities[i].type ] = result.entities[i].entitiy;
+            params[ result.entities[i].type ] = result.entities[i].entity;
         }
     }
     return [result.topScoringIntent.intent, params];
