@@ -46,7 +46,7 @@ exports.getMatchByUserId = async function(user_id) {
     return null;
  }
  // TODO: find only in not ended matches
- return Match.findOne({ id:user.current_match_id, game_ended: false }).exec();
+ return Match.findOne({ id:user.current_match_id }).exec();
 }
 
 exports.createMatch = async function(players_list, data, playerIndex) {
