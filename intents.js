@@ -5,6 +5,7 @@ exports.getUserVKName = async function(user_id) {
 
     var response = await fetch(url);
     var result = await response.json();
+    console.log(result.response)
     
     return result.response[0];
 };
