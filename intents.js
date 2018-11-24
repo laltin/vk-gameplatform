@@ -41,5 +41,5 @@ let getMoveIntent = async function(url, text) {
 exports.getMoveIntent = getMoveIntent;
 
 exports.getGameIntent = async function(text) {
-    return await getMoveIntent('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/9497d07e-9ba9-461b-b091-6479652bec4d?subscription-key=789f5de87f9d4ada92e0b393c7d579c0&timezoneOffset=-360&q=', text)
+    return await getMoveIntent('https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/7ae22e3d-4334-402d-8695-1cabebc5ef5e?subscription-key=789f5de87f9d4ada92e0b393c7d579c0&timezoneOffset=-360&q=', text)
 }
