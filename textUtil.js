@@ -8,5 +8,5 @@ exports.findTaggedUsers = function(message) {
     res.forEach(element => {
     	outputarr.push(element.substring(3,element.length))
     });
-    return [outputarr, str.replace(/\B\[id\w+/g, "")];
+    return [outputarr, str.replace(/\B\[id\w\|@\w+/g, "")];
 };

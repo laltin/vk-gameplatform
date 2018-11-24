@@ -117,7 +117,8 @@ bot.on(async function(ctx) {
         return;
     }
 
-    var move = await intents.getMoveIntent(game.nlpEndpoint, text);
+    let move = await intents.getMoveIntent(game.nlpEndpoint, text);
+    [move, params] = move;
     console.log(move);
     if (!move) {
         ctx.reply("Sorry, I didn't get it. Try again");
@@ -125,7 +126,7 @@ bot.on(async function(ctx) {
     }
     
     var gameCode = requireFromString(game.source);
-    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.active_player, move);
+    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.active_player, move, params);
 
     if (!isValid) {
         var reason = nextData;
