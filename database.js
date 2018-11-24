@@ -34,5 +34,5 @@ exports.saveUserById = async function(user_id, username) {
   name: username,
   id: user_id
  };
- return User.create({user}).exec();
+ return User.create(user).exec();
 }
