@@ -6,5 +6,8 @@ exports.checkStartIntent = async function(text) {
     var response = await fetch(url);
     var result = await response.json();
 
+    console.log(result.topScoringIntent.intent);
+    console.log(result.topScoringIntent.score);
+
     return (result.topScoringIntent.intent == "Start Game" && result.topScoringIntent.score > 0.8);
 }
