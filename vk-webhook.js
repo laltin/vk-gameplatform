@@ -91,6 +91,7 @@ bot.on(async function(ctx) {
                 console.log(name);
                 bot.sendMessage(players[i], `It is ${name}'s turn! Waiting for his/her move.`);
             }
+            console.log('message sent');
         }
 
         return;
