@@ -9,5 +9,5 @@ exports.checkStartIntent = async function(text) {
     console.log(result.topScoringIntent.intent);
     console.log(result.topScoringIntent.score);
 
-    return (result.topScoringIntent.intent == "Start Game" && result.topScoringIntent.score > 0.8);
+    return (result.topScoringIntent.intent == "Start Game" && result.topScoringIntent.score > 0.2);
 }
