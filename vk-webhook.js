@@ -70,7 +70,7 @@ bot.on(async function(ctx) {
         var gameCode = requireFromString(game.source);
 
         const [data, messages, playerIndex] = gameCode.init(players.length);
-        var match = database.createMatch(game.game_name, players, data, playerIndex);
+        var match = database.createMatch(game.game_name, players, JSON.stringify(data), playerIndex);
         for (let i=0; i < players.length; i++) {
             bot.sendMessage(players[i], messages[i]);
 
@@ -105,7 +105,7 @@ bot.on(async function(ctx) {
     }
     
     var gameCode = requireFromString(game.source);
-    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(match.state, match.playerIndex, move);
+    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.playerIndex, move);
 
     if (!isValid) {
         var reason = nextData;
@@ -116,7 +116,7 @@ bot.on(async function(ctx) {
 
     // TODO: check if game ended
 
-    database.updateMatch(nextData, nextPlayerIndex);
+    database.updateMatch(JSON.stringify(nextData), nextPlayerIndex);
     // TODO: update match if game ended
     for (let i=0; i < match.players.length; i++) {
         bot.sendMessage(match.players[i], messages[i]);
