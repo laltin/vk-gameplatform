@@ -54,15 +54,14 @@ bot.on(async function(ctx) {
     if (wannaPlayAGame) {
         console.log('wanna play a new game');
 
-        var game = await guessGame(text);
-        // TODO: guess game according to reachekksss ******
+        let [players, guessText] = textUtils.findTaggedUsers(text);
+        var game = await guessGame(guessText);
 
         if (!game) {
             ctx.reply('Tell me which game do you wanna play?');
             return;
         }
-
-        var players = textUtils.findTaggedUsers(text);
+        
         var n = players.length + 1;
         if (n < game.minPlayers || n > game.maxPlayers) {
             let nnn = game.minPlayers == game.maxPlayers ? game.minPlayers : `${game.minPlayers} to ${game.maxPlayers}`
