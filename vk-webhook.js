@@ -85,7 +85,7 @@ bot.on(async function(ctx) {
         return;
     }
 
-    var match = database.getMatchByUserId(user_id);
+    var match = await database.getMatchByUserId(user_id);
     console.log(match)
     console.log(JSON.stringify(match));
     if (!match) {
