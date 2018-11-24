@@ -26,9 +26,10 @@ exports.updateGame = async function(name, min, max, nlp, source_code) {
  return Game.updateOne({game_name:name}, {minPlayers:min, maxPlayers:max, nlpEndpoint:nlp, source: source_code});
 }
 
-exports.getUserById = async function(user_id) {
+var getUserById = async function(user_id) {
  return User.findOne({id:user_id}).exec();
-}
+};
+exports.getUserById = getUserById;
 
 exports.saveUserById = async function(user_id, username) {
  var user = new User({
