@@ -15,6 +15,7 @@ const database = require('./database.js');
 const requireFromString = require('require-from-string');
 
 
+
 bot.on(async function(ctx) {
     var user_id = ctx.message.from_id;
 
@@ -32,10 +33,8 @@ bot.on(async function(ctx) {
         var availableGames = database.getListOfGames();
         var game;
         for (let g in availableGames) {
-            console.log(text);
-            console.log(g.name);
-            if (text.indexOf(g.name) >= 0) {
-                game = g;
+            if (text.indexOf(games[g].name) >= 0) {
+                game = games[g];
                 break;
             }
         }
