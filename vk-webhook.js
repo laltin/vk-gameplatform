@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const VkBot = require('node-vk-bot-api')
-const fetch = require("node-fetch");
 
 const app = express()
 const bot = new VkBot({
@@ -15,19 +14,21 @@ const textUtils = require('./textUtils.js');
 bot.on((ctx) => {
     var user_id = ctx.message.from_id;
 
+    /*
     var user = database.getUserById(user_id);
     if (!user) {
         user = database.saveUserById(user_id);
         ctx.reply('Hi, welcome!')
-    }
+    }*/
 
     var text = ctx.message.text;
     if (intents.checkStartIntent(text)) {
+        ctx.reply("I see that you wanna play a game");
+        /*
         var player = textUtils.findTaggedUsers(text);
         var game = game.init();
         game = database.createGame(user, players, game.data);
-
-
+        */
     }
     
     //console.log(JSON.stringify(ctx.message));
