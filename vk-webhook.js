@@ -95,8 +95,8 @@ bot.on(async function(ctx) {
     }
 
     var game = await database.getGameByName(match.game_name)
-    
-    if (match.players[match.active_player] !== user_id) {
+
+    if (match.players[match.active_player] !== user_id+"") {
         let name = (await database.getUserById(match.players[match.active_player])).name;
         ctx.reply(`It is ${name}'s turn. Wait for him/her to make a move.`);
         return;
