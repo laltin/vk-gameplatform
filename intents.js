@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 
-export.getUserVKName = async function(user_id) {
-
+exports.getUserVKName = async function(user_id) {
+    
 };
 
 exports.checkStartIntent = async function(text) {
