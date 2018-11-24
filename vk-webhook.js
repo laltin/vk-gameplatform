@@ -16,6 +16,7 @@ bot.on((ctx) => {
 app.use(bodyParser.json())
 //app.post('/', bot.webhookCallback)
 app.post('/', function(req, res){
+  console.log('testa');
   res.send('hello world');
 });
 app.listen(9999)
