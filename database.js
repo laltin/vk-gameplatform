@@ -14,6 +14,7 @@ mongoose.connect(url, { useNewUrlParser: true });
 
 const Game = require("./models/game"); //make sure there is something in the directory
 const User = require("./models/user");
+const Match = require("./models/match");
 
 exports.getListOfGames = async function() {
     return Game.find({}).exec();
@@ -35,4 +36,12 @@ exports.saveUserById = async function(user_id, username) {
   id: user_id
  });
  return user.save();
+}
+
+exports.getMatchByUserId = async function(user_id) {
+ var user = await getUserById(user_id);
+ if (!user.current_match_id) {
+    return null;
+ }
+ return Match.findOne({ id:user.current_match_id });
 }
