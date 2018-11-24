@@ -69,7 +69,7 @@ bot.on(async function(ctx) {
         var infoMessage = `Starting ${game.game_name} game with ` // TODO: add players
         ctx.reply(infoMessage);
         for (let p in players) {
-            bot.sendMessage(p.id, infoMessage)
+            bot.sendMessage(players[p], infoMessage)
         }
 
         players.unshift(user_id);
@@ -140,6 +140,10 @@ bot.on(async function(ctx) {
     // TODO: update match if game ended
     for (let i=0; i < match.players.length; i++) {
         bot.sendMessage(match.players[i], messages[i]);
+
+        if (hasEnded) {
+            continue;
+        }
 
         if (nextPlayerIndex == i) {
             bot.sendMessage(match.players[i], 'It is your turn, make your move');
