@@ -63,7 +63,6 @@ bot.on(async function(ctx) {
             ctx.reply(`${game.game_name} requires ${nnn} players.`);
             return;
         }
-        // TODO: check number of players is enough ********
         // TODO: check if all users are in our database
 
         var infoMessage = `Starting ${game.game_name} game with ` // TODO: add players
@@ -126,13 +125,12 @@ bot.on(async function(ctx) {
         return;
     }
 
-    console.log('new data: '+JSON.stringify(nextData));
+    //console.log('new data: '+JSON.stringify(nextData));
+    //console.log('nextplayer:' + nextPlayerIndex);
+    //console.log(typeof nextPlayerIndex);
+    const hasEnded = gameCode.hasEnded(nextData);
 
-    // TODO: check if game ended
-    console.log('nextplayer:' + nextPlayerIndex);
-    console.log(typeof nextPlayerIndex);
-
-    await database.updateMatch(match._id, JSON.stringify(nextData), nextPlayerIndex, false);
+    await database.updateMatch(match._id, JSON.stringify(nextData), nextPlayerIndex, hasEnded ? true : false);
 
     // TODO: update match if game ended
     for (let i=0; i < match.players.length; i++) {
@@ -147,7 +145,9 @@ bot.on(async function(ctx) {
         }
     }
 
-    // TODO: send game ended messages
+    for (let i=0; i < match.players.length; i++) {
+        bot.sendMessage(match.players[i], hasEnded[i]);
+    }
 })
 
 
