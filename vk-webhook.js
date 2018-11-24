@@ -39,7 +39,7 @@ bot.on(async function(ctx) {
 
     var user = await database.getUserById(user_id);
     if (!user) {
-        let name = 'Lutfi';
+        let name = await intents.getUserVKName(user_id).first_name;
         user = await database.saveUserById(user_id, name);
         ctx.reply('Hi, welcome!')
     }
@@ -49,6 +49,7 @@ bot.on(async function(ctx) {
     if (wannaPlayAGame) {
 
         var game = await guessGame(text);
+        // TODO: guess game according to reachekksss ******
 
         if (!game) {
             ctx.reply('Tell me which game do you wanna play?');
@@ -56,7 +57,7 @@ bot.on(async function(ctx) {
         }
 
         var players = textUtils.findTaggedUsers(text);
-        // TODO: check number of players is enough
+        // TODO: check number of players is enough ********
         // TODO: check if all users are in our database
 
         var infoMessage = `Starting ${game.game_name} game with ` // TODO: add players
