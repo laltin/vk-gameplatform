@@ -135,7 +135,7 @@ bot.on(async function(ctx) {
             bot.sendMessage(match.players[i], 'It is your turn, make your move');
         }
         else {
-            let name = (await database.getUserById(players[nextPlayerIndex])).name;
+            let name = (await database.getUserById(match.players[nextPlayerIndex])).name;
             bot.sendMessage(match.players[i], `It is ${name}'s turn! Waiting for his/her move.`);
         }
     }
