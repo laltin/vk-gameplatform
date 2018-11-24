@@ -87,6 +87,7 @@ bot.on(async function(ctx) {
             }
             else {
                 let name = (await database.getUserById(players[playerIndex])).name;
+                console.log(name);
                 bot.sendMessage(players[i], `It is ${name}'s turn! Waiting for his/her move.`);
             }
         }
