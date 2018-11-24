@@ -15,7 +15,5 @@ mongoose.connect(url, { useNewUrlParser: true });
 const Game = require("./models/game"); //make sure there is something in the directory
 
 exports.getListOfGames = async function() {
- return Game
-  .find({})
-  .exec();
+    return Game.find({}).exec();
 }
