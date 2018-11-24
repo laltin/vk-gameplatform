@@ -23,7 +23,7 @@ console.log(await database.getListOfGames());
 async function guessGame(text) {
     var game;
 
-    var intent = intents.getGameIntent(text)
+    var intent = await intents.getGameIntent(text)
     if (!intent) {
         return null;
     }
