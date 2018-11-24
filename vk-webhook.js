@@ -47,6 +47,7 @@ bot.on(async function(ctx) {
     var text = ctx.message.text;
     var wannaPlayAGame = await intents.checkStartIntent(text);
     if (wannaPlayAGame) {
+        console.log('wanna play a new game');
 
         var game = await guessGame(text);
         // TODO: guess game according to reachekksss ******
