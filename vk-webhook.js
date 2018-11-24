@@ -32,6 +32,8 @@ bot.on(async function(ctx) {
         var availableGames = database.getListOfGames();
         var game;
         for (let g in availableGames) {
+            console.log(text);
+            console.log(g.name);
             if (text.indexOf(g.name) >= 0) {
                 game = g;
                 break;
