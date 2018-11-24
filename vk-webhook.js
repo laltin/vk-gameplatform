@@ -20,8 +20,10 @@ console.log(await database.getListOfGames());
 })();
 
 
-function findGame(text) {
+async function findGame(text) {
     var game;
+
+    var availableGames = await database.getListOfGames();
     for (let g in availableGames) {
         if (text.indexOf(availableGames[g].name) >= 0) {
             game = availableGames[g];
@@ -46,8 +48,7 @@ bot.on(async function(ctx) {
     var wannaPlayAGame = await intents.checkStartIntent(text);
     if (wannaPlayAGame) {
 
-        var availableGames = database.getListOfGames();
-        var game = findGame(text);
+        var game = await findGame(text);
 
         if (!game) {
             ctx.reply('Tell me which game do you wanna play?');
@@ -90,7 +91,7 @@ bot.on(async function(ctx) {
         return;
     }
 
-    var game = findGame(match.game_name)
+    var game = await findGame(match.game_name)
 
     var move = intents.getMoveIntent(game.nlpEndpoint, text);
     if (!move) {
