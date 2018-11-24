@@ -41,7 +41,7 @@ exports.saveUserById = async function(user_id, username) {
 
 exports.getMatchByUserId = async function(user_id) {
  var user = await getUserById(user_id);
- console.log(user.current_match_id);
+ console.log('current_match_id: ' + user.current_match_id);
  if (!user.current_match_id) {
     return null;
  }
