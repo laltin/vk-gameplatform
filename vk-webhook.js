@@ -78,7 +78,8 @@ bot.on(async function(ctx) {
                 bot.sendMessage(players[i], 'It is your turn, make your move');
             }
             else {
-                bot.sendMessage(players[i], `It is ${players[i]}'s turn! Waiting for his/her move.`);
+                let name = (await database.getUserById(player[i])).name;
+                bot.sendMessage(players[i], `It is ${name}'s turn! Waiting for his/her move.`);
             }
         }
 
@@ -97,6 +98,7 @@ bot.on(async function(ctx) {
     // TODO: check if it is current users turn
 
     var move = intents.getMoveIntent(game.nlpEndpoint, text);
+    console.log(move);
     if (!move) {
         ctx.reply("Sorry, I didn't get it. Try again");
         return;
@@ -123,7 +125,8 @@ bot.on(async function(ctx) {
             bot.sendMessage(match.players[i], 'It is your turn, make your move');
         }
         else {
-            bot.sendMessage(match.players[i], `It is ${match.players[i]}'s turn! Waiting for his/her move.`);
+            let name = (await database.getUserById(player[i])).name;
+            bot.sendMessage(match.players[i], `It is ${name}'s turn! Waiting for his/her move.`);
         }
     }
 
