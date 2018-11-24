@@ -86,6 +86,8 @@ bot.on(async function(ctx) {
     }
 
     var match = database.getMatchByUserId(user_id);
+    console.log(match)
+    console.log(JSON.stringify(match));
     if (!match) {
         ctx.reply("Wanna play a game? Just tell me the game and tag players");
         return;
