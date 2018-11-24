@@ -95,7 +95,12 @@ bot.on(async function(ctx) {
     }
 
     var game = await database.getGameByName(match.game_name)
-    // TODO: check if it is current users turn
+    
+    if (match.players[match.active_player] !== user_id) {
+        let name = (await database.getUserById(match.players[match.active_player])).name;
+        ctx.reply(`It is ${name}'s turn. Wait for him/her to make a move.`);
+        return;
+    }
 
     var move = await intents.getMoveIntent(game.nlpEndpoint, text);
     console.log(move);
@@ -105,7 +110,7 @@ bot.on(async function(ctx) {
     }
     
     var gameCode = requireFromString(game.source);
-    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.playerIndex, move);
+    let [isValid, nextData, messages, nextPlayerIndex] = gameCode.transition(JSON.parse(match.state), match.active_player, move);
 
     if (!isValid) {
         var reason = nextData;
@@ -119,7 +124,7 @@ bot.on(async function(ctx) {
     // TODO: check if game ended
     console.log('nextplayer:' + nextPlayerIndex);
     console.log(typeof nextPlayerIndex);
-    
+
     await database.updateMatch(match._id, JSON.stringify(nextData), nextPlayerIndex, false);
 
     // TODO: update match if game ended
