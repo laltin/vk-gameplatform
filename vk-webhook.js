@@ -10,6 +10,7 @@ const bot = new VkBot({
 
 
 const textUtils = require('./textUtil.js');
+const intents = require('./intents.js');
 
 bot.on((ctx) => {
     var user_id = ctx.message.from_id;
