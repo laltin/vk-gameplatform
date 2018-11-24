@@ -117,10 +117,11 @@ bot.on(async function(ctx) {
     console.log('new data: '+JSON.stringify(nextData));
 
     // TODO: check if game ended
-
-    await database.updateMatch(match._id, JSON.stringify(nextData), nextPlayerIndex, false);
     console.log('nextplayer:' + nextPlayerIndex);
     console.log(typeof nextPlayerIndex);
+    
+    await database.updateMatch(match._id, JSON.stringify(nextData), nextPlayerIndex, false);
+
     // TODO: update match if game ended
     for (let i=0; i < match.players.length; i++) {
         bot.sendMessage(match.players[i], messages[i]);
