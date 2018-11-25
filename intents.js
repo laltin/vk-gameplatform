@@ -11,7 +11,7 @@ exports.getUserVKName = async function(user_id) {
 };
 
 exports.checkStartIntent = async function(text) {
-    var url = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/b7a01841-6f8d-4338-9113-a4ca3cdea349?subscription-key=789f5de87f9d4ada92e0b393c7d579c0&timezoneOffset=-360&q=' + encodeURIComponent(text);
+    var url = 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/a37f6242-1a6b-4a43-b984-112657e8a620?subscription-key=05cf4ff3d5cb42e9a6af6277cea6f30a&timezoneOffset=-360&q=' + encodeURIComponent(text);
 
     var response = await fetch(url);
     var result = await response.json();
